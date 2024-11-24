@@ -16,6 +16,7 @@ sequelize
 	.catch((err) => console.error("Erro ao conectar ao PostgreSQL:", err));
 
 app.use("/auth", require("./routes/authRoutes"));
+app.use("/categories", require("./routes/categoryRoutes"));
 
 app.listen(PORT, () => {
 	console.log(`Servidor rodando em http://localhost:${PORT}`);
