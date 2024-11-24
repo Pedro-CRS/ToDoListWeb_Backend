@@ -17,6 +17,7 @@ sequelize
 
 app.use("/auth", require("./routes/authRoutes"));
 app.use("/categories", require("./routes/categoryRoutes"));
+app.use("/tasks", require("./routes/taskRoutes"));
 
 app.listen(PORT, () => {
 	console.log(`Servidor rodando em http://localhost:${PORT}`);
