@@ -38,3 +38,20 @@ exports.createTask = async (req, res) => {
 		res.status(500).json({ message: "Erro ao criar a tarefa", error: error.message });
 	}
 };
+
+exports.deleteTask = async (req, res) => {
+	const { id } = req.params;
+
+	try {
+		const task = await Task.findByPk(id);
+
+		if (!task) {
+			return res.status(404).json({ error: "Tarefa não encontrada" });
+		}
+
+		await task.destroy();
+		res.json({ message: "Tarefa excluída com sucesso" });
+	} catch (error) {
+		res.status(500).json({ error: "Erro ao deletar tarefa" });
+	}
+};
