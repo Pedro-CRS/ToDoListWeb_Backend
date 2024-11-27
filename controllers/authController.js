@@ -30,9 +30,31 @@ exports.login = async (req, res) => {
 			return res.status(401).json({ message: "Credenciais inválidas" });
 		}
 
-		const token = jwt.sign({ id: user.id }, process.env.JWT_SECRET, { expiresIn: "1h" });
-		res.json({ message: "Login bem-sucedido", token });
+		const token = jwt.sign({ id: user.id, email: user.email }, process.env.JWT_SECRET, { expiresIn: "7d" });
+		res.json({ token });
 	} catch (error) {
 		res.status(500).json({ error: error.message });
+	}
+};
+
+exports.verifyToken = (req, res, next) => {
+	const authHeader = req.headers.authorization;
+	console.log("Middleware executado", authHeader, req.headers);
+
+	if (!authHeader) {
+		console.log("Token não fornecido");
+		return res.status(401).json({ message: "Token não fornecido" });
+	}
+
+	const token = authHeader.split(" ")[1];
+
+	try {
+		const decoded = jwt.verify(token, process.env.JWT_SECRET);
+		req.user = decoded;
+		console.log("Token válido:", decoded);
+		next();
+	} catch (error) {
+		console.log("Erro ao verificar o token:", error.message);
+		return res.status(403).json({ message: "Token inválido ou expirado" });
 	}
 };
