@@ -96,3 +96,22 @@ exports.updateTask = async (req, res) => {
 		res.status(500).json({ error: "Erro ao atualizar tarefa." });
 	}
 };
+
+exports.toggleTaskCompletion = async (req, res) => {
+	const { id } = req.params;
+	const { isCompleted } = req.body;
+
+	try {
+		const task = await Task.findByPk(id);
+
+		if (!task)
+			return res.status(404).json({ error: "Tarefa não encontrada." });
+
+		task.isCompleted = isCompleted;
+		await task.save();
+
+		res.json({ message: "Tarefa atualizada com sucesso.", task });
+	} catch (error) {
+		res.status(500).json({ error: "Erro ao atualizar o status da tarefa." });
+	}
+};
