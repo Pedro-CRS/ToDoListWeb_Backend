@@ -19,6 +19,15 @@ const Category = sequelize.define("Category", {
 		type: DataTypes.DATE,
 		defaultValue: DataTypes.NOW,
 	},
+	user_id: {
+		type: DataTypes.INTEGER,
+		allowNull: false,
+		defaultValue: -1,
+		references: {
+			model: "User",
+			key: "id",
+		}
+	}
 }, {
 	timestamps: false,
 	tableName: "categories",
