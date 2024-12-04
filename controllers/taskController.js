@@ -2,8 +2,13 @@ const Category = require("../models/Category");
 const Task = require("../models/Task");
 
 exports.getTasks = async (req, res) => {
+	const userId = req.query?.user_id || 0;
+
 	try {
 		const tasks = await Task.findAll({
+			where: {
+				user_id: userId
+			},
 			attributes: { exclude: ["category_id"] },
 			include: {
 				model: Category,
