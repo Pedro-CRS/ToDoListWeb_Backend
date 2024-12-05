@@ -94,6 +94,7 @@ exports.updateTask = async (req, res) => {
 
 		task.title = title;
 		task.category_id = category_id;
+		task.edited_at = new Date();
 		await task.save();
 
 		res.json({ message: "Tarefa atualizada com sucesso.", task });
@@ -113,6 +114,7 @@ exports.toggleTaskCompletion = async (req, res) => {
 			return res.status(404).json({ error: "Tarefa não encontrada." });
 
 		task.isCompleted = isCompleted;
+		task.completed_at = isCompleted === true ? new Date() : null;
 		await task.save();
 
 		res.json({ message: "Tarefa atualizada com sucesso.", task });

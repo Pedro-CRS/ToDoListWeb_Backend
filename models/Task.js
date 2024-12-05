@@ -24,9 +24,17 @@ const Task = sequelize.define("Task", {
 		type: DataTypes.DATE,
 		defaultValue: DataTypes.NOW,
 	},
+	edited_at: {
+		type: DataTypes.DATE,
+		defaultValue: DataTypes.NOW,
+	},
 	isCompleted: {
 		type: DataTypes.BOOLEAN,
 		defaultValue: false,
+	},
+	completed_at: {
+		type: DataTypes.DATE,
+		allowNull: true,
 	},
 }, {
 	tableName: "tasks",
