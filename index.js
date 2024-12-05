@@ -7,7 +7,13 @@ const { sequelize } = require("./config/database");
 const app = express();
 const PORT = process.env.PORT || 5000;
 
-app.use(cors());
+app.use(
+	cors({
+		origin: ["https://pedro-crs.github.io/ToDoListWeb"],
+		methods: ["GET", "POST", "PUT", "DELETE"],
+	})
+);
+
 app.use(bodyParser.json());
 
 sequelize
