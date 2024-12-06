@@ -52,9 +52,6 @@ exports.verifyToken = (req, res, next) => {
 		const decoded = jwt.verify(token, process.env.JWT_SECRET);
 		req.user = decoded;
 
-		if (req.path === "/validate-token")
-			return res.json({ userId: decoded.id, userName: decoded.name });
-
 		next();
 	} catch (error) {
 		console.log("Erro ao verificar o token:", error.message);
