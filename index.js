@@ -5,14 +5,18 @@ const cors = require("cors");
 const { sequelize } = require("./config/database");
 
 const app = express();
-const PORT = process.env.PORT || 5000;
+const allowedOrigin = process.env.ALLOWED_ORIGIN;
 
 app.use(
 	cors({
-		origin: ["https://pedro-crs.github.io/ToDoListWeb"],
+		origin: allowedOrigin,
 		methods: ["GET", "POST", "PUT", "DELETE"],
+		allowedHeaders: ["Content-Type", "Authorization"],
+		credentials: true,
 	})
 );
+
+app.options("*", cors());
 
 app.use(bodyParser.json());
 
@@ -24,10 +28,6 @@ sequelize
 app.use("/auth", require("./routes/authRoutes"));
 app.use("/categories", require("./routes/categoryRoutes"));
 app.use("/tasks", require("./routes/taskRoutes"));
-
-app.listen(PORT, () => {
-	console.log(`Servidor rodando em http://localhost:${PORT}`);
-});
 
 app.get("/", (req, res) => {
 	res.send("Bem-vindo à API ToDoList!");
