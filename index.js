@@ -5,6 +5,7 @@ const cors = require("cors");
 const { sequelize } = require("./config/database");
 
 const app = express();
+const PORT = process.env.PORT;
 const allowedOrigin = process.env.ALLOWED_ORIGIN;
 
 app.use(
@@ -28,6 +29,10 @@ sequelize
 app.use("/auth", require("./routes/authRoutes"));
 app.use("/categories", require("./routes/categoryRoutes"));
 app.use("/tasks", require("./routes/taskRoutes"));
+
+app.listen(PORT, () => {
+	console.log(`Servidor rodando em http://localhost:${PORT}`);
+});
 
 app.get("/", (req, res) => {
 	res.send("Bem-vindo à API ToDoList!");
