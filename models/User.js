@@ -24,9 +24,9 @@ const User = sequelize.define("users", {
 		type: DataTypes.BOOLEAN,
 		defaultValue: true,
 	},
-	role: {
-		type: DataTypes.STRING,
-		defaultValue: "user",
+	created_at: {
+		type: DataTypes.DATE,
+		defaultValue: DataTypes.NOW,
 	},
 }, {
 	timestamps: false,
