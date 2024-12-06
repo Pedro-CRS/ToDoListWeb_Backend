@@ -31,7 +31,7 @@ exports.login = async (req, res) => {
 		}
 
 		const token = jwt.sign({ id: user.id, email: user.email }, process.env.JWT_SECRET, { expiresIn: "7d" });
-		res.json({ token, userId: user.id, userName: user.name  });
+		res.json({ token, userId: user.id, userName: user.name });
 	} catch (error) {
 		res.status(500).json({ error: error.message });
 	}
@@ -51,7 +51,10 @@ exports.verifyToken = (req, res, next) => {
 	try {
 		const decoded = jwt.verify(token, process.env.JWT_SECRET);
 		req.user = decoded;
-		console.log("Token válido:", decoded);
+
+		if (req.path === "/validate-token")
+			return res.json({ userId: decoded.id, userName: decoded.name });
+
 		next();
 	} catch (error) {
 		console.log("Erro ao verificar o token:", error.message);
