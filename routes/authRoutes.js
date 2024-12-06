@@ -6,7 +6,7 @@ const router = express.Router();
 router.post("/register", register);
 router.post("/login", login);
 
-router.get("/validateToken", (req, res) => {
+router.get("/validateToken", verifyToken, (req, res) => {
 	const authHeader = req.headers.authorization;
 
 	if (!authHeader)
