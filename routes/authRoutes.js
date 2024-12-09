@@ -9,7 +9,7 @@ router.post("/login", login);
 router.get("/validateToken", verifyToken, (req, res) => {
 	res.json({
 		userId: req.user.id,
-		userName: req.user.name
+		userName: req.user.userName
 	});
 });
 
